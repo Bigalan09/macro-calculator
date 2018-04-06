@@ -381,6 +381,41 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
   components: {},
@@ -394,7 +429,9 @@ exports.default = {
       activity_level: 0,
       deficit: "",
       bmr: 0,
-      calories: 0
+      calories: 0,
+      bmi: 0,
+      macro: ''
     };
   },
   methods: {
@@ -408,11 +445,38 @@ exports.default = {
       }
       TDEE = bmr * this.activity_level;
       this.calories = Math.ceil(TDEE - this.deficit / 100 * TDEE);
+
+      this.bmi = Math.round(this.weight / Math.pow(this.height / 100, 2) * 100) / 100;
+
       this.bmr = bmr;
+
+      if (this.bmi < 16) {
+        this.category = "Severe Thinness";
+      } else if (between(this.bmi, 16.1, 17)) {
+        this.category = "Moderate Thinness";
+      } else if (between(this.bmi, 17.1, 18.5)) {
+        this.category = "Mild Thinness";
+      } else if (between(this.bmi, 18.51, 25)) {
+        this.category = "Normal";
+      } else if (between(this.bmi, 25.1, 30)) {
+        this.category = "Overweight";
+      } else if (between(this.bmi, 30.1, 35)) {
+        this.category = "Obese Class I";
+      } else if (between(this.bmi, 35.1, 40)) {
+        this.category = "Obese Class II";
+      } else {
+        this.category = "Obese Class III";
+      }
+
       this.seen = true;
     }
   }
 };
+
+
+function between(x, min, max) {
+  return x >= min && x <= max;
+}
 
 /***/ }),
 /* 3 */
@@ -1165,9 +1229,8 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-10" }, [
-        _c(
-          "select",
-          {
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
             directives: [
               {
                 name: "model",
@@ -1176,44 +1239,125 @@ var render = function() {
                 expression: "activity_level"
               }
             ],
-            staticClass: "form-control",
-            attrs: { id: "activity" },
+            attrs: { type: "radio", id: "one", value: "1.2" },
+            domProps: { checked: _vm._q(_vm.activity_level, "1.2") },
             on: {
               change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.activity_level = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
+                _vm.activity_level = "1.2"
               }
             }
-          },
-          [
-            _c("option", { attrs: { value: "1.2" } }, [_vm._v("Sedentry")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "1.375" } }, [
-              _vm._v("Light Activity")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "1.55" } }, [
-              _vm._v("Moderate Activity")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "1.725" } }, [
-              _vm._v("High Activity")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "1.9" } }, [
-              _vm._v("Extreme Activity")
-            ])
-          ]
-        )
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticClass: "form-check-label", attrs: { for: "one" } },
+            [_vm._v("Sedentry")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.activity_level,
+                expression: "activity_level"
+              }
+            ],
+            attrs: { type: "radio", id: "two", value: "1.375" },
+            domProps: { checked: _vm._q(_vm.activity_level, "1.375") },
+            on: {
+              change: function($event) {
+                _vm.activity_level = "1.375"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticClass: "form-check-label", attrs: { for: "two" } },
+            [_vm._v("Light Activity")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.activity_level,
+                expression: "activity_level"
+              }
+            ],
+            attrs: { type: "radio", id: "three", value: "1.55" },
+            domProps: { checked: _vm._q(_vm.activity_level, "1.55") },
+            on: {
+              change: function($event) {
+                _vm.activity_level = "1.55"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticClass: "form-check-label", attrs: { for: "three" } },
+            [_vm._v("Moderate Activity")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.activity_level,
+                expression: "activity_level"
+              }
+            ],
+            attrs: { type: "radio", id: "four", value: "1.725" },
+            domProps: { checked: _vm._q(_vm.activity_level, "1.725") },
+            on: {
+              change: function($event) {
+                _vm.activity_level = "1.725"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticClass: "form-check-label", attrs: { for: "four" } },
+            [_vm._v("High Activity")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.activity_level,
+                expression: "activity_level"
+              }
+            ],
+            attrs: { type: "radio", id: "five", value: "1.9" },
+            domProps: { checked: _vm._q(_vm.activity_level, "1.9") },
+            on: {
+              change: function($event) {
+                _vm.activity_level = "1.9"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticClass: "form-check-label", attrs: { for: "five" } },
+            [_vm._v("Extreme Activity")]
+          )
+        ])
       ])
     ]),
     _vm._v(" "),
@@ -1278,6 +1422,92 @@ var render = function() {
     _vm._m(1),
     _vm._v(" "),
     _c("div", { staticClass: "form-group row" }, [
+      _vm._m(2),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-10" }, [
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.macro,
+                expression: "macro"
+              }
+            ],
+            attrs: { type: "radio", id: "m1", value: "1" },
+            domProps: { checked: _vm._q(_vm.macro, "1") },
+            on: {
+              change: function($event) {
+                _vm.macro = "1"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticClass: "form-check-label", attrs: { for: "m1" } },
+            [_vm._v("40 / 40 / 20 (Weight loss)")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.macro,
+                expression: "macro"
+              }
+            ],
+            attrs: { type: "radio", id: "m2", value: "2" },
+            domProps: { checked: _vm._q(_vm.macro, "2") },
+            on: {
+              change: function($event) {
+                _vm.macro = "2"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticClass: "form-check-label", attrs: { for: "m2" } },
+            [_vm._v("60 / 20 / 20 (Weight Gain)")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.macro,
+                expression: "macro"
+              }
+            ],
+            attrs: { type: "radio", id: "m3", value: "3" },
+            domProps: { checked: _vm._q(_vm.macro, "3") },
+            on: {
+              change: function($event) {
+                _vm.macro = "3"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticClass: "form-check-label", attrs: { for: "m3" } },
+            [_vm._v("50 / 40 / 10")]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(3),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group row" }, [
       _c("div", { staticClass: "col" }, [
         _c(
           "button",
@@ -1294,14 +1524,23 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(2),
+    _vm._m(4),
     _vm._v(" "),
     _vm.seen
       ? _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col" }, [
-            _vm._v("\t\n\t\t\tBMR: " + _vm._s(_vm.bmr)),
+            _vm._v(
+              "\t\n\t\t\tRecommended Daily Calorie Intake: " +
+                _vm._s(_vm.calories)
+            ),
             _c("br"),
-            _vm._v("\n\t\t\tDaily Calories: " + _vm._s(_vm.calories)),
+            _vm._v(
+              "\n\t\t\tYour BMI is : " +
+                _vm._s(_vm.bmi) +
+                " (" +
+                _vm._s(_vm.category) +
+                ")"
+            ),
             _c("br")
           ])
         ])
@@ -1316,6 +1555,24 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col" }, [_c("hr")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col" }, [_c("hr")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col-sm-2 col-form-label", attrs: { for: "activity" } },
+      [_vm._v("Macro"), _c("br"), _vm._v("(Protien / Carb / Fat)")]
+    )
   },
   function() {
     var _vm = this
